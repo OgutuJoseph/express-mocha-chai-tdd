@@ -17,4 +17,6 @@ describe('Tasks API', () => {
     /** Test the PUT route */
     
     /** Test the PATCH route */
-})
+    
+    /** Test the DELETE route */
+});
