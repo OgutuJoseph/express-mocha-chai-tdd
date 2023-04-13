@@ -105,7 +105,7 @@ app.delete('/api/tasks/:id', (request, response) => {
     const index = tasks.indexOf(task);
     tasks.splice(index, 1);
     response.send(task);
-})
+});
 
 
 app.listen(port, () => {
