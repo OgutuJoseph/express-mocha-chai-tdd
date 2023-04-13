@@ -107,7 +107,10 @@ app.delete('/api/tasks/:id', (request, response) => {
     response.send(task);
 });
 
-
-app.listen(port, () => {
+// app.listen(port, () => {
+//     console.log(`Server has started on port: ${port}`)
+// });
+/** to avoid error:: 'TypeError: app.address is not a function' :: */
+module.exports = app.listen(port, () => {
     console.log(`Server has started on port: ${port}`)
 });
