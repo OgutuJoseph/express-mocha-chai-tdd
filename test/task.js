@@ -176,4 +176,30 @@ describe('Tasks API', () => {
     });
     
     /** Test the DELETE route */
+    describe('DELETE /api/tasks/:id', () => {
+        it('It should DELTE a task', (done) => {
+            const taskId = 1;
+            chai.request(server)
+                .delete(`/api/tasks/${taskId}`)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    response.body.should.be.a('object');
+                    response.body.should.have.property('id');
+                    response.body.should.have.property('name');
+                done();
+                });
+        });
+
+        // to test a positive fail
+        it('It should NOT DELETE a task', (done) => {
+            const taskId = 18;
+            chai.request(server)
+                .delete(`/api/tasks/${taskId}`)
+                .end((err, response) => {
+                    response.should.have.status(404);
+                    response.text.should.be.eq('The task with the provided ID does not exist');
+                done();
+                });
+        });
+    });
 });
