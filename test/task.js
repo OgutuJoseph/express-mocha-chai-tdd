@@ -63,6 +63,41 @@ describe('Tasks API', () => {
     });
     
     /** Test the POST route */
+    describe('POST /api/tasks/', () => {
+        it('It should POST a new task', (done) => {
+            const task = {
+                name: 'Task 4',
+                completed: false
+            }
+            chai.request(server)
+                .post('/api/tasks')
+                .send(task)
+                .end((err, response) => {
+                    response.should.have.status(201);
+                    response.body.should.be.a('object');
+                    response.body.should.have.property('id').eq(4);
+                    response.body.should.have.property('name').eq('Task 4');
+                    response.body.should.have.property('completed').eq(false);
+                done();
+                });
+        });
+        
+        // to test a positive fail
+        it('It should NOT POST a new task without required fields', (done) => {
+            const task = {
+                // name: 'Task 4',
+                completed: false
+            }
+            chai.request(server)
+                .post('/api/tasks')
+                .send(task)
+                .end((err, response) => {
+                    response.should.have.status(400);
+                    response.text.should.be.eq('The name field is required and should be at least 3 characters long');
+                done();
+                });
+        });
+    });
     
     /** Test the PUT route */
     
