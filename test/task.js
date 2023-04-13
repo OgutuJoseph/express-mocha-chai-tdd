@@ -139,6 +139,41 @@ describe('Tasks API', () => {
     });
     
     /** Test the PATCH route */
+    describe('PATCH /api/tasks/:id', () => {
+        it('It should PATCH a task', (done) => {
+            const taskId = 1;
+            const task = {
+                name: 'Task 1 New',
+            }
+            chai.request(server)
+                .patch(`/api/tasks/${taskId}`)
+                .send(task)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    response.body.should.be.a('object');
+                    response.body.should.have.property('id').eq(1);
+                    response.body.should.have.property('name').eq('Task 1 New');
+                done();
+                });
+        });
+
+        // to test a positive fail
+        it('It should NOT PATCH a task', (done) => {
+            const taskId = 18;
+            const task = {
+                name: 'Ta',
+                completed: true
+            }
+            chai.request(server)
+                .patch(`/api/tasks/${taskId}`)
+                .send(task)
+                .end((err, response) => {
+                    response.should.have.status(404);
+                    response.text.should.be.eq('The task with the provided ID does not exist');
+                done();
+                });
+        });
+    });
     
     /** Test the DELETE route */
 });
